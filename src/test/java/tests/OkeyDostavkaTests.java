@@ -13,17 +13,18 @@ import static com.codeborne.selenide.Selectors.byLinkText;
 import static com.codeborne.selenide.Selectors.byName;
 import static com.codeborne.selenide.Selenide.*;
 
+
 class OkeyDostavkaTests {
 
-    String number  = "9816997343";
-    String email   = "fetaka6640@fazmail.net";
+    String number  = "9816997343",
+        email   = "fetaka6640@fazmail.net"; // todo
     String pass    = "123123qQ";
     String name    = "Даниил";
     String last    = "Инкогнито";
     String middle  = "Отче";
     String birth   = "12.12.1992";
-    String id      = "#add2CartBtn__1_-1002_3074457345618274413_206583";
 
+    
     @Test
     void okeyAllProductSearchTest() {
         open("https://www.okeydostavka.ru/spb");
@@ -31,17 +32,17 @@ class OkeyDostavkaTests {
         $(byName("searchTerm")).setValue("Арбуз"); //ввести в поиске по каталогу сайта.
         $(".search-query__button").click(); //нажать на символ "лупа".
 
-        $$(".ok-theme").shouldBe(CollectionCondition.size(18)); //проверка кол-во ед товара(было 17 стало 18)
+        $$(".ok-theme").shouldHave(size(18)); // проверка кол-во ед товара(было 17 стало 18)
     }
 
     @Test
-    void okeyOnePoductSearchTest() {
+    void okeyOnePoductSearchTest() { // todo исправить тест
         open("https://www.okeydostavka.ru/spb");
 
         $(byName("searchTerm")).setValue("Арбуз"); //ввести в поиске по каталогу сайта.(PressEnter).
         $(".search-query__button").click(); //нажать на "символ лупа".
 
-        $$(".product ok-theme").get(3).shouldBe(); //Проверить что в каталог добавили определенный арбуз.
+        $$(".product.ok-theme").get(3).shouldBe(); //Проверить что в каталог добавили определенный арбуз.
     }
 
     @Test
@@ -49,9 +50,9 @@ class OkeyDostavkaTests {
         open("https://www.okeydostavka.ru/spb");
 
         $(".timeslot__text").click(); //нажать кнопку "Доставка: время не выбрано".
-        $("#control_13105").click(); //нажать кнопку "Самовывоз".
+        $(".pickup-control").click(); //нажать кнопку "Самовывоз".
 
-        $$(".store-list").shouldBe(CollectionCondition.size(1)); //Проверить наличие 6 магазинов
+        $$(".store-list .store-item").shouldHave(size(6)); //Проверить наличие 6 магазинов
     }
 
     @Test
@@ -80,7 +81,7 @@ class OkeyDostavkaTests {
         open("https://www.okeydostavka.ru/spb");
 
         $(".btn-cookie").click(); //Нажать на Кнопку "Принять" cookie.
-        $(id).click(); //Добовляем продукт в корзину "иконка с изображением продуктовой карзины"
+        $(".product-buttons .product-cart").click(); //Добовляем продукт в корзину "иконка с изображением продуктовой карзины"
         $(".header-mobile-account__cart").click(); //Нажать на "изображением продуктовой карзины"пользователя.
         $("#bread_logonLink").click(); //Нажать кнопку "Войти в систему и оформить заказ".
         $("#Custom_email").setValue(email);
